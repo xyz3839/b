@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Layout</title>
+    <style>
+        /* Base Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+        }
+
+        /* Grid container */
+        .container {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "sidebar content right-sidebar"
+                "footer footer footer";
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        /* Header and Footer */
+        .header,
+        .footer {
+            grid-column: 1 / span 3;
+            background: linear-gradient(to right, #2c3e50, #34495e);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .header {
+            grid-area: header;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .footer {
+            grid-area: footer;
+        }
+
+        /* Sidebar */
+        .sidebar,
+        .right-sidebar {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .right-sidebar {
+            grid-area: right-sidebar;
+        }
+
+        /* Sidebar Menu */
+        .sidebar h3,
+        .right-sidebar h3 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul,
+        .right-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li,
+        .right-sidebar ul li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar ul li:hover,
+        .right-sidebar ul li:hover {
+            background-color: #3498db;
+            color: #fff;
+            transform: scale(1.03);
+        }
+
+        /* Content Area */
+        .content {
+            grid-area: content;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+
+        /* Layout Information */
+        .layout-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .layout-info h3 {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .layout-info p {
+            font-size: 16px;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .layout-info ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .layout-info ul li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        .layout-info ul li strong {
+            color: #3498db;
+        }
+
+        /* Cards Section */
+        .content .cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #e1e5e9;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-areas:
+                    "header"
+                    "content"
+                    "sidebar"
+                    "right-sidebar"
+                    "footer";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .content .cards {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">Modern Header Area</div>
+
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <h3>Sidebar Menu</h3>
+            <ul>
+                <li>Dashboard</li>
+                <li>Profile</li>
+                <li>Settings</li>
+                <li>Help</li>
+                <li>Logout</li>
+            </ul>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <h2>Main Content Area</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras scelerisque leo nec eros ultrices, ac
+                tempor lectus congue. Mauris tristique justo et facilisis dignissim. Suspendisse potenti.</p>
+
+            <!-- Layout Information -->
+            <section class="layout-info">
+                <h3>Page Layout Overview</h3>
+                <p>This page uses a modern, responsive grid layout to organize the content. The layout consists of the
+                    following key areas:</p>
+                <ul>
+                    <li><strong>Header:</strong> The header is the first section at the top of the page. It typically
+                        contains the site title, navigation links, and branding. It's important because it introduces
+                        the website and helps users quickly understand the purpose of the site.</li>
+                    <li><strong>Sidebar (Left):</strong> The left sidebar often contains navigation links to various
+                        sections of the site. It acts as a menu or index to quickly guide users to different parts of
+                        the website. It's useful for maintaining a clean and organized layout, especially for larger
+                        websites.</li>
+                    <li><strong>Main Content:</strong> The main content area is the heart of the page, where most of the
+                        information or features are displayed. It can include text, images, videos, or interactive
+                        elements like forms. This is where you want to highlight the most important content of your
+                        website.</li>
+                    <li><strong>Right Sidebar:</strong> The right sidebar often holds additional information, links, or
+                        features that complement the main content. This might include related articles, advertisements,
+                        or contact details. While secondary to the main content, it still provides valuable content and
+                        can improve user engagement.</li>
+                    <li><strong>Footer:</strong> The footer is located at the bottom of the page and typically includes
+                        copyright information, legal links (like terms of service and privacy policy), and other useful
+                        links like contact information or social media icons. The footer provides a consistent place for
+                        secondary but important information.</li>
+                </ul>
+
+                <p>The layout adapts to different screen sizes using a responsive design. On smaller devices, the grid
+                    re-arranges into a single column format for easier reading and navigation.</p>
+            </section>
+
+            <div class="cards">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" alt="Card image">
+                    <h3>Card Title 1</h3>
+                    <p>This is a description of the card content. It has text, images, and hover effects.</p>
+                </div>
+
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" alt="Card image">
+                    <h3>Card Title 2</h3>
+                    <p>This is a description of the card content. It has text, images, and hover effects.</p>
+                </div>
+
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" alt="Card image">
+                    <h3>Card Title 3</h3>
+                    <p>This is a description of the card content. It has text, images, and hover effects.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="right-sidebar">
+            <h3>Related Links</h3>
+            <ul>
+                <li>Link 1</li>
+                <li>Link 2</li>
+                <li>Link 3</li>
+                <li>Link 4</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">Modern Footer Area</div>
+    </div>
+
+</body>
+
+</html>
