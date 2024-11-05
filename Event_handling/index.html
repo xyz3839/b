@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Handling</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e0f7fa;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      color: #00796b;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 200px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      background-color: #3e8e41;
+      transform: translateY(1px);
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      margin: 5px;
+      width: 90%;
+      border: 1px solid #00796b;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
+    }
+
+    #output,
+    #keyMessage,
+    #focusMessage {
+      font-weight: bold;
+      color: #00796b;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* Form submit button style */
+    form button[type="submit"] {
+      background-color: #00796b;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: transform 0.2s, background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 150px;
+      text-transform: uppercase;
+    }
+
+    form button[type="submit"]:hover {
+      background-color: #00695c;
+      transform: translateY(-3px);
+    }
+
+    form button[type="submit"]:active {
+      background-color: #004d40;
+      transform: translateY(1px);
+    }
+
+    /* Style for message paragraphs */
+    p {
+      font-size: 1em;
+      color: #37474f;
+      margin: 0;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function showMessage() {
+      alert("Button clicked!");
+    }
+
+    function showMouseOver() {
+      alert("Mouse over the button!");
+    }
+
+    function showDoubleClick() {
+      alert("Button double-clicked!");
+    }
+
+    function changeTextColor() {
+      document.getElementById("keyMessage").style.color = "red";
+    }
+
+    function resetTextColor() {
+      document.getElementById("keyMessage").style.color = "#00796b";
+    }
+
+    function displayKeyPress(event) {
+      document.getElementById("keyMessage").textContent = "You pressed: " + event.key;
+    }
+
+    function showFocus() {
+      document.getElementById("focusMessage").textContent = "Input box focused!";
+    }
+
+    function showBlur() {
+      document.getElementById("focusMessage").textContent = "Input box lost focus!";
+    }
+
+    function handleRightClick(event) {
+      event.preventDefault();
+      alert("Right-click is disabled on this button.");
+    }
+
+    function showChange() {
+      const selectedValue = document.getElementById("dropdown").value;
+      document.getElementById("output").textContent = "Selected option: " + selectedValue;
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert("Form submitted successfully!");
+    }
+  </script>
+</head>
+
+<body>
+  <div>
+    <h1>Event Handling Example</h1>
+    <div class="button-container">
+      <!-- Click Event -->
+      <button onclick="showMessage()">Click Me</button>
+
+      <!-- Mouseover and Mouseout Events -->
+      <button onmouseover="showMouseOver()" onmouseout="alert('Mouse out of the button!')">Mouse Over Me</button>
+
+      <!-- Double Click Event -->
+      <button ondblclick="showDoubleClick()">Double Click Me</button>
+
+      <!-- Keydown and Keyup Events -->
+      <input type="text" onkeydown="changeTextColor()" onkeyup="resetTextColor(); displayKeyPress(event);"
+        placeholder="Press any key">
+      <p id="keyMessage">Press a key in the input box</p>
+
+      <!-- Focus and Blur Events -->
+      <input type="text" onfocus="showFocus()" onblur="showBlur()" placeholder="Click here to focus">
+      <p id="focusMessage">Focus or blur the input box above</p>
+
+      <!-- Context Menu (Right-click) Event -->
+      <button oncontextmenu="handleRightClick(event)">Right Click Disabled</button>
+
+      <!-- Change Event -->
+      <select id="dropdown" onchange="showChange()">
+        <option value="Option 1">Option 1</option>
+        <option value="Option 2">Option 2</option>
+        <option value="Option 3">Option 3</option>
+      </select>
+
+      <!-- Display selected option -->
+      <p id="output">Select an option from the dropdown</p>
+
+      <!-- Form with Submit Event -->
+      <form onsubmit="submitForm(event)">
+        <input type="text" placeholder="Your Name" required>
+        <button type="submit">Submit Form</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

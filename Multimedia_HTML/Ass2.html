@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia Elements in HTML</title>
+
+    <!-- Link to Google Fonts for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            /* Light background color */
+            color: #333;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #0056b3;
+            /* Blue color for title */
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #f84f96;
+            /* Pink color for section titles */
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #555;
+            /* Darker gray text for content */
+        }
+
+        /* Container for multimedia content */
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Multimedia Section Styling */
+        .multimedia {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .multimedia img,
+        .multimedia video,
+        .multimedia audio {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            font-size: 1em;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #0056b3;
+            /* Blue link color */
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #f84f96;
+            /* Pink hover effect */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Handling Multimedia Elements in HTML</h1>
+
+    <div class="content-container">
+        <!-- Image element -->
+        <div class="multimedia">
+            <h2>Image Example</h2>
+            <p>This is an example of an image:</p>
+            <img src="img2.jpg" alt="Sample Image">
+        </div>
+
+        <!-- Audio element -->
+        <div class="multimedia">
+            <h2>Audio Example</h2>
+            <p>This is an example of an audio file:</p>
+            <audio controls>
+                <source src="audio_sample.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <!-- Video element -->
+        <div class="multimedia">
+            <h2>Video Example</h2>
+            <p>This is an example of a video file:</p>
+            <video controls width="100%">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Created by <a href="#">Your Name</a></p>
+    </div>
+
+</body>
+
+</html>
