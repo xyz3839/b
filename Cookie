@@ -1,0 +1,130 @@
+<?php
+// Handle cookie setting
+if (isset($_POST['set_cookie'])) {
+    $username = $_POST['username'];
+    $expire = time() + 3600;  // Cookie expires in 1 hour
+    setcookie('username', $username, $expire, '/');
+    $message = "Cookie has been set for username: $username";
+}
+
+// Handle cookie retrieval
+$username_cookie = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
+
+// Handle cookie deletion
+if (isset($_POST['delete_cookie'])) {
+    setcookie('username', '', time() - 3600, '/');  // Expire the cookie
+    $message = "Cookie has been deleted!";
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .heading {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cookie-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .delete-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="heading">Cookie Management</div>
+    
+    <?php if (isset($message)): ?>
+        <div class="success-message"><?php echo $message; ?></div>
+    <?php endif; ?>
+
+    <?php if (empty($username_cookie)): ?>
+        <!-- Set Cookie Form -->
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="username">Enter Username</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <button type="submit" name="set_cookie">Set Cookie</button>
+        </form>
+    <?php else: ?>
+        <!-- Display Cookie Info -->
+        <div class="cookie-info">
+            <p>Welcome back, <?php echo htmlspecialchars($username_cookie); ?>! Cookie is set.</p>
+            <form method="POST" action="">
+                <button type="submit" class="delete-btn" name="delete_cookie">Delete Cookie</button>
+            </form>
+        </div>
+    <?php endif; ?>
+</div>
+
+</body>
+</html>
