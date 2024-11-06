@@ -1,0 +1,14 @@
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS CookieManagement;
+
+-- Use the newly created database
+USE CookieManagement;
+
+-- Create the 'users' table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    color VARCHAR(20) NOT NULL,
+    last_visit DATETIME NOT NULL
+);
+select * from users;
