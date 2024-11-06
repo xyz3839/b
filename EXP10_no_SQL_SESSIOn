@@ -1,0 +1,155 @@
+<?php
+session_start();
+
+// Logout logic
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Session timeout (set timeout duration in seconds, e.g., 15 minutes)
+$timeout_duration = 900; // 15 minutes
+if (isset($_SESSION['start_time']) && (time() - $_SESSION['start_time']) > $timeout_duration) {
+    session_unset();
+    session_destroy();
+    $message = "Session expired due to inactivity. Please log in again.";
+} else {
+    $_SESSION['start_time'] = time();
+}
+
+// Login logic
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+    // Hardcoded credentials for demonstration purposes
+    $username = 'admin';
+    $password = 'password123';
+
+    if ($_POST['username'] === $username && $_POST['password'] === $password) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        $_SESSION['start_time'] = time();  // Reset session start time
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        $message = "Invalid username or password!";
+    }
+}
+
+// Display message if any
+$message = isset($message) ? $message : '';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Management - PHP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .heading {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .session-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
+        <div class="heading">Login</div>
+        
+        <?php if (!empty($message)): ?>
+            <div class="error-message"><?php echo $message; ?></div>
+        <?php endif; ?>
+        
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit" name="login">Login</button>
+        </form>
+    <?php else: ?>
+        <div class="success-message">Welcome, <?php echo $_SESSION['username']; ?>! You are logged in.</div>
+        <div class="session-info">
+            <p>Your session started at: <?php echo date('Y-m-d H:i:s', $_SESSION['start_time']); ?></p>
+            <form action="" method="GET">
+                <button type="submit" class="logout-btn" name="logout">Logout</button>
+            </form>
+        </div>
+    <?php endif; ?>
+</div>
+
+</body>
+</html>
