@@ -1,0 +1,136 @@
+<?php
+// Handle cookie setting
+if (isset($_POST['set_cookie'])) {
+    $theme_color = $_POST['theme_color'];
+    $expire = time() + (86400 * 30);  // Cookie expires in 30 days
+    setcookie('theme_color', $theme_color, $expire, '/');
+    $message = "Your theme color has been set to: $theme_color";
+}
+
+// Handle cookie retrieval
+$theme_color_cookie = isset($_COOKIE['theme_color']) ? $_COOKIE['theme_color'] : null;
+
+// Handle cookie modification
+if (isset($_POST['modify_cookie'])) {
+    $theme_color = $_POST['theme_color'];
+    setcookie('theme_color', $theme_color, time() + (86400 * 30), '/');
+    $message = "Your theme color has been updated to: $theme_color";
+}
+
+// Handle cookie deletion
+if (isset($_POST['delete_cookie'])) {
+    setcookie('theme_color', '', time() - 3600, '/');  // Expire the cookie
+    $message = "Theme color cookie has been deleted!";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Preference - Cookie Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .heading {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cookie-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="heading">User Preferences (Theme Color)</div>
+
+    <?php if (isset($message)): ?>
+        <div class="success-message"><?php echo $message; ?></div>
+    <?php endif; ?>
+
+    <?php if (empty($theme_color_cookie)): ?>
+        <!-- Set Theme Color Cookie -->
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="theme_color">Select Your Preferred Theme Color</label>
+                <select name="theme_color" id="theme_color" required>
+                    <option value="">--Select--</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="blue">Blue</option>
+                </select>
+            </div>
+            <button type="submit" name="set_cookie">Set Preference</button>
+        </form>
+    <?php else: ?>
+        <!-- Display Current Theme Color -->
+        <div class="cookie-info">
+            <p>Your current theme color preference is: <strong><?php echo htmlspecialchars($theme_color_cookie); ?></strong></p>
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="theme_color">Modify Theme Color</label>
+                    <select name="theme_color" id="theme_color">
+                        <option value="light" <?php echo $theme_color_cookie == 'light' ? 'selected' : ''; ?>>Light</option>
+                        <option value="dark" <?php echo $theme_color_cookie == 'dark' ? 'selected' : ''; ?>>Dark</option>
+                        <option value="blue" <?php echo $theme_color_cookie == 'blue' ? 'selected' : ''; ?>>Blue</option>
+                    </select>
+                </div>
+                <button type="submit" name="modify_cookie">Modify Preference</button>
+            </form>
+            <form method="POST" action="">
+                <button type="submit" class="delete-btn" name="delete_cookie">Delete Preference</button>
+            </form>
+        </div>
+    <?php endif; ?>
+</div>
+
+</body>
+</html>
