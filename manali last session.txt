@@ -1,0 +1,121 @@
+<?php
+// Set cookie expiration time (1 hour from now)
+$cookieExpiration = time() + 3600;
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Set a cookie with the user's name
+    $name = htmlspecialchars($_POST['name']);
+    setcookie("username", $name, $cookieExpiration, "/"); // Cookie will be available site-wide
+    header("Location: " . $_SERVER['PHP_SELF']); // Redirect to the same page
+    exit;
+}
+
+// Check if the cookie is set
+$username = isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : '';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Cookie Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            color: #4A90E2;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .clear {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cookie Management</h1>
+        
+        <?php if ($username): ?>
+            <div class="result">
+                <strong>Welcome back, <?= $username ?>!</strong><br>
+                <div class="clear">
+                    <a href="?clear=true" style="text-decoration:none; color:#4A90E2;">Clear Cookie</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <form method="POST">
+                <input type="text" name="name" placeholder="Enter your name" required>
+                <button type="submit">Set Cookie</button>
+            </form>
+        <?php endif; ?>
+
+        <?php
+        // Clear cookie if requested
+        if (isset($_GET['clear'])) {
+            setcookie("username", "", time() - 3600, "/"); // Delete the cookie
+            header("Location: " . $_SERVER['PHP_SELF']); // Redirect to the same page
+            exit;
+        }
+        ?>
+    </div>
+</body>
+</html>
+
+exp 11
