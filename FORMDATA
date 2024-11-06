@@ -1,0 +1,140 @@
+<?php
+// Initialize variables
+$name = $email = $message = "";
+$nameErr = $emailErr = $messageErr = "";
+
+// Form processing
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate name
+    if (empty($_POST["name"])) {
+        $nameErr = "Name is required";
+    } else {
+        $name = test_input($_POST["name"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+            $nameErr = "Only letters and white space allowed";
+        }
+    }
+
+    // Validate email
+    if (empty($_POST["email"])) {
+        $emailErr = "Email is required";
+    } else {
+        $email = test_input($_POST["email"]);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        }
+    }
+
+    // Validate message
+    if (empty($_POST["message"])) {
+        $messageErr = "Message is required";
+    } else {
+        $message = test_input($_POST["message"]);
+    }
+}
+
+// Function to sanitize inputs
+function test_input($data) {
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Handling and Data Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, textarea {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Contact Us</h2>
+    
+    <?php
+    // Success message after form submission
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && !$nameErr && !$emailErr && !$messageErr) {
+        echo "<div class='success'>Thank you for your message, $name! We will get back to you shortly.</div>";
+    }
+    ?>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<?php echo $name;?>" required>
+        <span class="error"><?php echo $nameErr;?></span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<?php echo $email;?>" required>
+        <span class="error"><?php echo $emailErr;?></span>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required><?php echo $message;?></textarea>
+        <span class="error"><?php echo $messageErr;?></span>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <?php
+    // Displaying the processed data (only when no errors)
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && !$nameErr && !$emailErr && !$messageErr) {
+        echo "<h3>Processed Data:</h3>";
+        echo "<p><strong>Name:</strong> $name</p>";
+        echo "<p><strong>Email:</strong> $email</p>";
+        echo "<p><strong>Message:</strong> $message</p>";
+    }
+    ?>
+</div>
+
+</body>
+</html>
